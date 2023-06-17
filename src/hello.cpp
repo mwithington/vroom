@@ -10,6 +10,7 @@
 
 #include "./game/tile/tile.h"
 #include "./game/player/player.h"
+#include "./engine/config/ConfigService.h"
 
 // This example is taken from http://learnopengl.com/
 // http://learnopengl.com/code_viewer.php?code=getting-started/hellowindow2
@@ -107,6 +108,13 @@ int main()
 
     Tile t = Tile();
     Player p = Player();
+
+    ConfigService configSvc = ConfigService();
+    std::cout << "Loading config..." << std::endl;
+    configSvc.loadConfig("./config.tcd");
+    std::cout << "Loaded config..." << std::endl;
+
+    std::cout << "Config: " << "tcd: " << configSvc.getFloatValue("tcd") << std::endl;
 
     std::cout << "Tile: " << "x: " << t.pos.x << ", y: " << t.pos.y << std::endl;
     std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
