@@ -15,6 +15,6 @@ void Vec2::transpose(float x, float y) {
   std::cout << "transpose..." << std::endl;
 }
 
-void transpose(Vec2 vector) {
+void Vec2::transpose(Vec2 vector) {
   std::cout << "transpose..." << std::endl;
 }
