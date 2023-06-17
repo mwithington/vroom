@@ -1,5 +1,10 @@
-class Player {
+#pragma once
+
+#include "../../engine/entity/entity.h"
+
+class Player: public Entity {
   public:
-    int x;
-    int y;
+    void update() override;
+    void render() override;
+    void destroy() override;
 };

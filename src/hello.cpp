@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 // #include <GLFW/aglfw3.h>
 
+#include "./game/tile/tile.h"
+#include "./game/player/player.h"
 
 // This example is taken from http://learnopengl.com/
 // http://learnopengl.com/code_viewer.php?code=getting-started/hellowindow2
@@ -102,6 +104,12 @@ int main()
 
     // Define the viewport dimensions
     glViewport(0, 0, WIDTH, HEIGHT);
+
+    Tile t = Tile();
+    Player p = Player();
+
+    std::cout << "Tile: " << "x: " << t.pos.x << ", y: " << t.pos.y << std::endl;
+    std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
 
     // Game loop
     while (!glfwWindowShouldClose(window))

@@ -1,10 +1,10 @@
 #pragma once
-#include "src/engine/math/vec2.h"
+#include "../math/Vec2.h"
 
-virtual class Entiy {
+class Entity {
   public:
-    Vec2 position;
-    virtual void update();
-    virtual void render();
-    virtual void destroy();
+    Vec2 pos;
+    virtual void update() = 0;
+    virtual void render() = 0;
+    virtual void destroy() = 0;
 };
