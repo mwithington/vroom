@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <iostream>
 
 Board::Board() {
   this->width = 0;

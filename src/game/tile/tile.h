@@ -4,7 +4,6 @@
 
 class Tile: public Entity {
   private:
-    Vec2 pos;
     int type;
 
   public:

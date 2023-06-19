@@ -12,12 +12,18 @@ echo "[ - Clean build dir]"
 rm -rf ./*
 
 echo "[ - CMake]"
-cmake -G "Unix Makefiles" ..
-# cmake ..
+if [ $USER == "tcd" ]
+then
+  cmake -G "Unix Makefiles" ../.tcd
+elif [$USER == "mww"]
+then
+  cmake -G "Unix Makefiles" ../.mww
+else
+  echo "USER env var not set..."
+fi
 
 echo "[ - Make]"
 make
-# mingw-make
 
 cd ..
 
