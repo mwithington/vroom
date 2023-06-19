@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 // GLAD
 #define GLAD_GL_IMPLEMENTATION
@@ -24,7 +25,6 @@
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 // Window dimensions
-const GLuint WIDTH = 800, HEIGHT = 600;
 
 
 #ifdef GLAD_OPTION_GL_DEBUG
@@ -50,8 +50,22 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
+    // Init ConfigService and load window
+    ConfigService configSvc = ConfigService();
+    std::cout << "Loading config..." << std::endl;
+    configSvc.loadConfig("./config.tcd");
+    std::cout << "Loaded config..." << std::endl;
+
+
+
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "LearnOpenGL", NULL, NULL);
+    const GLuint WIDTH = configSvc.getIntValue("WINDOW_WIDTH", 600), HEIGHT = configSvc.getIntValue("WINDOW_HEIGHT", 800);
+    std::cout << "Config: " << "WINDOW_HEIGHT: " << HEIGHT << std::endl;
+    std::cout << "Config: " << "WINDOW_WIDTH: " << WIDTH << std::endl;
+
+    const std::string TITLE = configSvc.getValue("WINDOW_TITLE", "So far so good");
+
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, &(TITLE[0]), NULL, NULL);
     glfwMakeContextCurrent(window);
     if (window == NULL)
     {
@@ -109,12 +123,6 @@ int main()
     Tile t = Tile();
     Player p = Player();
 
-    ConfigService configSvc = ConfigService();
-    std::cout << "Loading config..." << std::endl;
-    configSvc.loadConfig("./config.tcd");
-    std::cout << "Loaded config..." << std::endl;
-
-    std::cout << "Config: " << "tcd: " << configSvc.getFloatValue("tcd") << std::endl;
 
     std::cout << "Tile: " << "x: " << t.pos.x << ", y: " << t.pos.y << std::endl;
     std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;

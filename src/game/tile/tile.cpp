@@ -2,14 +2,12 @@
 #include <iostream>
 
 Tile::Tile() {
-  this->pos = Vec2(0, 0);
-  this->size = Vec2(1, 1);
+  this->pos = Vec2();
   this->type = 0; // default type
 }
 
-Tile::Tile(Vec2 pos, Vec2 size, int type) {
+Tile::Tile(Vec2 pos, int type) {
   this->pos = pos;
-  this->size = size;
   this->type = type;
 }
 

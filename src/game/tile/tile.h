@@ -4,12 +4,12 @@
 
 class Tile: public Entity {
   private:
-    Vec2 size;
+    Vec2 pos;
     int type;
 
   public:
     Tile();
-    Tile(Vec2 pos, Vec2 size, int type);
+    Tile(Vec2 pos, int type);
     ~Tile();
     void update() override;
     void render() override;
