@@ -15,7 +15,7 @@ Tile::~Tile() {
 }
 
 void Tile::render() {
-  std::cout << "render..." << std::endl;
+  std::cout << type;
 }
 
 void Tile::update() {
@@ -28,4 +28,8 @@ void Tile::destroy() {
 
 Vec2 Tile::getPos() {
   return this->pos;
+}
+
+void Tile::setType(int type) {
+  this->type = type;
 }

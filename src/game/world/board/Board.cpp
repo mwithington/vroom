@@ -29,6 +29,12 @@ Board::Board(int width, int height, Tile** tiles) {
 
 void Board::render() {
   std::cout << "render..." << std::endl;
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      tiles[x][y].render();
+    }
+    std::cout << std::endl;
+  }
 }
 
 void Board::update() {
@@ -39,3 +45,6 @@ void Board::destroy() {
   std::cout << "destroy..." << std::endl;
 }
 
+Tile** Board::getTiles() {
+  return tiles;
+}

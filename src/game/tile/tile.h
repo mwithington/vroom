@@ -14,4 +14,5 @@ class Tile: public Entity {
     void render() override;
     void destroy() override;
     Vec2 getPos();
+    void setType(int type);
 };

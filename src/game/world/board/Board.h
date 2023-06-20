@@ -12,9 +12,9 @@ class Board: Entity {
     Board();
     Board(int width, int height);
     Board(int width, int height, Tile** tiles);
-    ~Board();
 
     void update() override;
     void render() override;
     void destroy() override;
+    Tile** getTiles();
 };
