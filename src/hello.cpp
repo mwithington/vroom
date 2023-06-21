@@ -104,7 +104,7 @@ int main()
     {
       handleInput();
 
-      // update();
+      update();
 
       render(window);
     }
@@ -129,11 +129,14 @@ void handleInput() {
 }
 
 void update(std::vector<Entity*> entityList) {
-  // TODO(Tom): loop through world entities and update
+  for (int i = 0; i < entityList.size(); i++) {
+    entityList[i]->update();
+  }
 }
 
 void render(GLFWwindow* window) {
   // TODO(Tom): have some global counter and only render if it's been >1/60th of a second since last frame
+
 
   // Clear the colorbuffer
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
