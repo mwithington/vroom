@@ -10,6 +10,14 @@ class Vec2 {
     void transpose(float x, float y);
     void transpose(Vec2 vector);
 
-    // Vec2 operator+(Vec2 o);
-    // Vec2 operator-(Vec2 o);
+    Vec2 add(Vec2 o);
+    Vec2 sub(Vec2 o);
+    float dot(Vec2 o);
+
+    void norm();
+    Vec2 toNorm();
+
+    Vec2 operator+(const Vec2 o);
+    Vec2 operator-(const Vec2 o);
+    float operator*(const Vec2 o);
 };
