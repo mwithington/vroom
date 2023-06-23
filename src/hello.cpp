@@ -104,7 +104,7 @@ int main()
     {
       handleInput();
 
-      update();
+      // update();
 
       render(window);
     }
