@@ -41,5 +41,9 @@ void EntityManager::update() {
       }
     }
   }
+  // Loop through removal list and destroy entities
+  for (int i = 0; i < removalList.size(); i++) {
+    removalList.at(i)->destroy();
+  }
   removalList.clear();
 }
