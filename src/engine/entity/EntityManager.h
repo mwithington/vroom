@@ -6,6 +6,7 @@ class EntityManager {
   private:
     static EntityManager* instance;
     std::vector<Entity*> entityList;
+    std::vector<Entity*> removalList;
     EntityManager();
 
   public:
@@ -13,4 +14,6 @@ class EntityManager {
     std::vector<Entity*> getEntityList();
     void addEntity(Entity* e);
     void markForRemoval(Entity* e);
+
+    void update();
 };
