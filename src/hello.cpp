@@ -1,4 +1,6 @@
+#include <cstdio>
 #include <iostream>
+#include <ostream>
 #include <string>
 #include <vector>
 
@@ -15,6 +17,8 @@
 #include "./engine/config/ConfigService.h"
 #include "./game/world/board/Board.h"
 #include "engine/entity/entity.h"
+#include "engine/input/Keyboard.h"
+
 
 // This example is taken from http://learnopengl.com/
 // http://learnopengl.com/code_viewer.php?code=getting-started/hellowindow2
@@ -59,6 +63,8 @@ int main()
         glfwTerminate();
         return -1;
     }
+
+    Keyboard* keyboard = Keyboard::getInstance();
 
     // Set the required callback functions
     glfwSetKeyCallback(window, key_callback);
@@ -114,17 +120,26 @@ int main()
     return 0;
 }
 
+
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+  Keyboard* keyboard = Keyboard::getInstance();
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    std::cout << "Key pressed: " << keyboard->isKeyDown(GLFW_KEY_E) << std::endl;
+    glfwSetWindowShouldClose(window, GL_TRUE);
+  }
+
+  if(key >= 0) {
+    std::cout << "Key pressed: " << key << " is down: >" << keyboard->isKeyDown(key) << std::endl;
+    keyboard->setKey(key, action);
+  }
 }
+
 
 void handleInput() {
   // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
   glfwPollEvents();
-
 
 }
 
