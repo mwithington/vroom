@@ -7,6 +7,7 @@ C++ game engine
 - EntityManager
 - Camera
 - Config Service
+- Event Publisher
 
 ## Other Core:
 - Input Manager?

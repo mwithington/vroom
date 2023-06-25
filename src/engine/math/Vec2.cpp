@@ -33,14 +33,14 @@ float Vec2::dot(Vec2 o) {
 }
 
 void Vec2::norm() {
-  const float len = std::sqrt((this->x*this->x) + (this->y*this->y));
+  const float len = this->mag();
 
   this->x = x/len;
   this->y = y/len;
 }
 
 Vec2 Vec2::toNorm() {
-  const float len = std::sqrt((this->x*this->x) + (this->y*this->y));
+  const float len = this->mag();
 
   return Vec2(this->x/len, this->y/len);
 }
@@ -55,4 +55,8 @@ Vec2 Vec2::operator-(const Vec2 o) {
 
 float Vec2::operator*(const Vec2 o) {
   return this->dot(o);
+}
+
+float Vec2::mag() {
+  return std::sqrt((this->x*this->x) + (this->y*this->y));
 }

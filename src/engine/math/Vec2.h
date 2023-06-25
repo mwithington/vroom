@@ -13,6 +13,7 @@ class Vec2 {
     Vec2 add(Vec2 o);
     Vec2 sub(Vec2 o);
     float dot(Vec2 o);
+    float mag();
 
     void norm();
     Vec2 toNorm();
