@@ -1,14 +1,16 @@
 #pragma once
 #include "Event.h"
+#include "Eventful.h"
+#include <functional>
 #include <vector>
 
-// NOTE: Consider keeping 10 most recent events
+// Consider keeping 10 most recent events
 class EventPublisher {
   private:
-    std::vector<void (*)(Event* event)> subscribers;
+    std::vector<std::function<void(Event* event)>> subscribers;
 
   public:
     EventPublisher();
     void publish(Event* event);
-    void subscribe(void (*)(Event* event));
+    void subscribe(std::function<void(Event* event)> callback);
 };

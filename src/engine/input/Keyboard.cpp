@@ -26,4 +26,7 @@ bool Keyboard::isKeyUp(int key) {
 
 void Keyboard::setKey(int key, bool value) {
   instance->keys[key] = value;
+  Event* event = new Event{ key, value ? KEY_DOWN : KEY_UP };
+  instance->keyboardEvents->publish(event);
+  delete event;
 }

@@ -140,7 +140,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void handleInput() {
   // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
   glfwPollEvents();
-
 }
 
 void update(std::vector<Entity*> entityList) {
