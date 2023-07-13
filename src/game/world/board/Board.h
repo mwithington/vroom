@@ -13,6 +13,7 @@ class Board: Entity {
     Board(int width, int height);
     Board(int width, int height, Tile** tiles);
 
+    void init() override;
     void update() override;
     void render() override;
     void destroy() override;

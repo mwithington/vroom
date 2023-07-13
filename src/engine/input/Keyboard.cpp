@@ -6,6 +6,8 @@ Keyboard::Keyboard() {
   for (int i = 0; i < 348; i++) {
     keys[i] = false;
   }
+
+  this->keyboardEvents = new EventPublisher();
 }
 
 Keyboard* Keyboard::getInstance() {
@@ -25,8 +27,12 @@ bool Keyboard::isKeyUp(int key) {
 }
 
 void Keyboard::setKey(int key, bool value) {
+  if (key < 0 || key > 347) {
+    std::cout << "invalid key: " << key << std::endl;
+    return;
+  }
   instance->keys[key] = value;
-  Event* event = new Event{ key, value ? KEY_DOWN : KEY_UP };
+  Event event = Event{ key, value ? "key_down" : "key_up" };
+  std::cout << "publishing event" << std::endl;
   instance->keyboardEvents->publish(event);
-  delete event;
 }

@@ -96,7 +96,10 @@ int main()
     glViewport(0, 0, WIDTH, HEIGHT);
 
     Tile t = Tile();
+
+    std::cout << "creating player" << std::endl;
     Player p = Player();
+    p.init();
     Board b = Board(13, 11);
 
     b.getTiles()[3][3].setType(5);
@@ -105,12 +108,15 @@ int main()
     std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
     b.render();
 
+    auto entityList = std::vector<Entity*>();
+    entityList.push_back(&p);
+
     // Game loop
     while (!glfwWindowShouldClose(window))
     {
       handleInput();
 
-      // update();
+      update(entityList);
 
       render(window);
     }
@@ -144,7 +150,7 @@ void handleInput() {
 
 void update(std::vector<Entity*> entityList) {
   for (int i = 0; i < entityList.size(); i++) {
-    entityList[i]->update();
+     entityList[i]->update();
   }
 }
 

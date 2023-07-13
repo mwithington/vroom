@@ -10,6 +10,7 @@ class Tile: public Entity {
     Tile();
     Tile(Vec2 pos, int type);
     ~Tile();
+    void init() override;
     void update() override;
     void render() override;
     void destroy() override;

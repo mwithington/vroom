@@ -27,6 +27,10 @@ Board::Board(int width, int height, Tile** tiles) {
   this->tiles = tiles;
 }
 
+void Board::init() {
+  std::cout << "board init" << std::endl;
+}
+
 void Board::render() {
   std::cout << "render..." << std::endl;
   for (int y = 0; y < height; y++) {

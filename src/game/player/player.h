@@ -7,10 +7,11 @@
 
 class Player: public Entity, public Eventful {
   private:
-    void onKeyboardEvent(Event* event);
+    static void onKeyboardEvent(void* player, Event &event);
 
   public:
     Player();
+    void init() override;
     void update() override;
     void render() override;
     void destroy() override;

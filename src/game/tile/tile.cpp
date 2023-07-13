@@ -14,6 +14,10 @@ Tile::Tile(Vec2 pos, int type) {
 Tile::~Tile() {
 }
 
+void Tile::init() {
+  std::cout << "tile init" << std::endl;
+}
+
 void Tile::render() {
   std::cout << type;
 }
