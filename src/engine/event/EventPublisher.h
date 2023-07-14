@@ -3,6 +3,7 @@
 #include "Eventful.h"
 #include <functional>
 #include <vector>
+#include <iostream>
 
 // Consider keeping 10 most recent events
 class EventPublisher {

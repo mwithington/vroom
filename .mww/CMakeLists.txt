@@ -15,4 +15,5 @@ set(OpenGL_GL_PREFERENCE STATIC)
 include_directories("~/tools/glad/include")
 find_package(glfw3 REQUIRED)
 
-target_link_libraries(vroom PRIVATE glfw GL)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo")
+target_link_libraries(vroom PRIVATE glfw)

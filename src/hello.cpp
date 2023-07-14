@@ -26,6 +26,7 @@
 
 // Declarations
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
 void update(std::vector<Entity*> entityList);
@@ -36,11 +37,13 @@ int main()
 {
     // Init GLFW
     glfwInit();
+    glfwSetErrorCallback(glfwErrorCallback);
     // Set all the required options for GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);  // Request forward-compatible context
 
     // Init ConfigService
     ConfigService configSvc = ConfigService();
@@ -64,7 +67,9 @@ int main()
         return -1;
     }
 
+    std::cout << "trying to make the board" << std::endl;
     Keyboard* keyboard = Keyboard::getInstance();
+    std::cout << "made the board" << std::endl;
 
     // Set the required callback functions
     glfwSetKeyCallback(window, key_callback);
@@ -134,6 +139,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     std::cout << "Key pressed: " << key << " is down: >" << keyboard->isKeyDown(key) << std::endl;
     keyboard->setKey(key, action);
   }
+}
+
+void glfwErrorCallback(int error, const char* description) {
+  std::cout << "GLFW Error: " << error << " - " << description << std::endl;
 }
 
 

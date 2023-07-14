@@ -4,7 +4,9 @@
 
 Player::Player() {
   // (Player::*)(Event*)
+  std::cout << "Player constructor" << std::endl;
   Keyboard::getInstance()->keyboardEvents->subscribe(std::bind(&Player::onKeyboardEvent, this, std::placeholders::_1));
+  std::cout << "Player keyboard made" << std::endl;
 }
 
 void Player::onKeyboardEvent(Event* event){

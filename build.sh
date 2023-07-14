@@ -15,7 +15,7 @@ echo "[ - CMake]"
 if [ $USER == "tcd" ]
 then
   cmake -G "Unix Makefiles" ../.tcd
-elif [ $USER == "mww" ]
+elif [ $USER == "mww" ] || [ $USER == "michaelwithington" ]
 then
   cmake -G "Unix Makefiles" ../.mww
 else
