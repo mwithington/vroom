@@ -26,6 +26,8 @@ bool Keyboard::isKeyUp(int key) {
   return !instance->keys[key];
 }
 
+// TODO(Tom): should we have a queue of key events (w stripped repeats) or,
+// on update cycle active entities just act on current key state? (<- prob simplest and good enough since update cycle is very frequent)
 void Keyboard::setKey(int key, bool value) {
   if (key < 0 || key > 347) {
     std::cout << "invalid key: " << key << std::endl;

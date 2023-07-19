@@ -118,6 +118,7 @@ int main()
 
       update(entityList);
 
+      // TODO(Tom): create timer loop to limit redraws (maybe a config flag for uncapped fps)
       render(window);
     }
 

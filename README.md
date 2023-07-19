@@ -4,7 +4,7 @@ C++ game engine
 ## Core:
 - Vec2
 - Entity
-- EntityManager
+- EntityManager (We should flesh this out more. Entity prio, reg/unreg with relationship changes)
 - Camera
 - Config Service
 - Event Publisher
@@ -17,10 +17,10 @@ C++ game engine
 - Texture
 - Font
 - Collision?
--
+- Game (State) Manager (We need states and transitions for the game)
+- Rendering...
 
 ## Game:
 - Player
 - Board
 - Tile
-
