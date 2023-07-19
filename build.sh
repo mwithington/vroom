@@ -2,11 +2,11 @@
 
 echo "Building project..."
 
-if [ ! -d ./build ]; then
-  mkdir ./build
+if [ ! -d ./out ]; then
+  mkdir ./out
 fi
 
-cd ./build
+cd ./out
 
 echo "[ - Clean build dir]"
 rm -rf ./*
