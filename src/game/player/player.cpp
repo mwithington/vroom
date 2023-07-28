@@ -1,10 +1,10 @@
-#include "./player.h"
-#include <functional>
-#include <iostream>
+#include "player.h"
+
 
 Player::Player() {
-  // (Player::*)(Event*)
-  // Keyboard::getInstance()->keyboardEvents->subscribe(std::bind(&Player::onKeyboardEvent, this, std::placeholders::_1));
+  speed = 0.5f;
+  inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
+
 }
 
 void Player::init() {
@@ -16,7 +16,7 @@ void Player::onKeyboardEvent(void* player, Event &event){
 }
 
 void Player::update() {
-  // std::cout << "update..." << std::endl;
+  inputComponent->wrong_update(*this);
 }
 
 void Player::render() {
