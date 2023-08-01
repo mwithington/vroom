@@ -26,6 +26,7 @@
 
 // Declarations
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
 void update(std::vector<Entity*> entityList);
@@ -36,11 +37,13 @@ int main()
 {
     // Init GLFW
     glfwInit();
+    glfwSetErrorCallback(glfwErrorCallback);
     // Set all the required options for GLFW
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
     // Init ConfigService
     ConfigService configSvc = ConfigService();
@@ -167,4 +170,9 @@ void render(GLFWwindow* window) {
 
   // Swap the screen buffers
   glfwSwapBuffers(window);
+}
+
+
+void glfwErrorCallback(int error, const char* description) {
+  std::cout << "GLFW Error: " << error << " - " << description << std::endl;
 }

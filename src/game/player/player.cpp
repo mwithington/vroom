@@ -4,7 +4,6 @@
 Player::Player() {
   speed = 0.5f;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
-
 }
 
 void Player::init() {
@@ -16,7 +15,7 @@ void Player::onKeyboardEvent(void* player, Event &event){
 }
 
 void Player::update() {
-  inputComponent->wrong_update(*this);
+  inputComponent->update(*this);
 }
 
 void Player::render() {
