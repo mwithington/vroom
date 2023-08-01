@@ -22,9 +22,10 @@ void PlayerInputComponent::update(Player& player) {
   if(Keyboard::getInstance()->isKeyDown(KEY_A)) {
     direction.x -=1;
   }
-  if (!isnan(direction.mag())) {
-    direction.norm();
-    std::cout << direction.x << direction.y;
+
+  direction.norm();
+
+  if (!std::isnan(direction.mag())) {
     player.pos.x += (direction.x * player.speed);
     player.pos.y += (direction.y * player.speed);
     std::cout << "x:" << player.pos.x << " y:" << player.pos.y << std::endl;

@@ -6,6 +6,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../out/bin")
 file(GLOB_RECURSE SOURCE_FILES "../src/*.cpp")
 
 add_executable(vroom ${SOURCE_FILES})
+set_target_properties(vroom PROPERTIES SUFFIX ".exe")
+
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
