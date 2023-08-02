@@ -2,7 +2,7 @@
 
 
 Player::Player() {
-  speed = 0.5f;
+  speed = 5.0f;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
 }
 
@@ -11,11 +11,11 @@ void Player::init() {
 }
 
 void Player::onKeyboardEvent(void* player, Event &event){
-  std::cout << "Ingest Keyboard Event: " << event.type << ":" << event.data;
+  // std::cout << "Ingest Keyboard Event: " << event.type << ":" << event.data;
 }
 
-void Player::update() {
-  inputComponent->update(*this);
+void Player::update(uint32_t timeElapsed) {
+  inputComponent->update(*this, timeElapsed);
 }
 
 void Player::render() {

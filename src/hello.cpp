@@ -1,8 +1,12 @@
-#include <cstdio>
 #include <iostream>
 #include <ostream>
+#include <stdint.h>
 #include <string>
+#include <time.h>
 #include <vector>
+#include <ctime>
+#include <chrono>
+#include <thread>
 
 // GLAD
 #define GLAD_GL_IMPLEMENTATION
@@ -29,12 +33,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
-void update(std::vector<Entity*> entityList);
+void update(std::vector<Entity*> entityList, uint32_t gameTimeElapsed);
 // void render(GLFWwindow* window, Camera* cam, std::vector<Entity*> entityList);
 void render(GLFWwindow* window);
 
 int main()
 {
+    uint32_t start = std::clock();
     // Init GLFW
     glfwInit();
     glfwSetErrorCallback(glfwErrorCallback);
@@ -114,15 +119,27 @@ int main()
     auto entityList = std::vector<Entity*>();
     entityList.push_back(&p);
 
+    uint32_t micros = (std::clock() - start) / (double)(CLOCKS_PER_SEC);
+    std::cout << "time: " << micros << std::endl;
+
     // Game loop
+    uint32_t lastTime = std::clock();
+    uint32_t currentTime = 0;
+    uint32_t gameTimeElapsed = 0;
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     while (!glfwWindowShouldClose(window))
     {
+      currentTime = std::clock();
+      gameTimeElapsed = (currentTime - lastTime) / (double)(CLOCKS_PER_SEC / 1000);
       handleInput();
 
-      update(entityList);
+      update(entityList, gameTimeElapsed);
 
       // TODO(Tom): create timer loop to limit redraws (maybe a config flag for uncapped fps)
       render(window);
+      lastTime = currentTime;
+
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     // Terminates GLFW, clearing any resources allocated by GLFW.
@@ -141,7 +158,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
   }
 
   if(key >= 0) {
-    std::cout << "Key pressed: " << key << " is down: >" << keyboard->isKeyDown(key) << std::endl;
+    // std::cout << "Key pressed: " << key << " is down: >" << keyboard->isKeyDown(key) << std::endl;
     keyboard->setKey(key, action);
   }
 }
@@ -152,9 +169,9 @@ void handleInput() {
   glfwPollEvents();
 }
 
-void update(std::vector<Entity*> entityList) {
+void update(std::vector<Entity*> entityList, uint32_t gameTimeElapsed) {
   for (int i = 0; i < entityList.size(); i++) {
-     entityList[i]->update();
+     entityList[i]->update(gameTimeElapsed);
   }
 }
 

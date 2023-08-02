@@ -24,8 +24,23 @@ Vec2 Vec2::add(Vec2 o) {
   return Vec2(this->x + o.x, this->y + o.y);
 }
 
+void Vec2::mutAdd(Vec2 o) {
+  x += o.x;
+  y += o.y;
+}
+
 Vec2 Vec2::sub(Vec2 o) {
   return Vec2(this->x - o.x, this->y - o.y);
+}
+
+void Vec2::mutSub(Vec2 o) {
+  x -= o.x;
+  y -= o.y;
+}
+
+void Vec2::scale(float s) {
+  x *= s;
+  y *= s;
 }
 
 float Vec2::dot(Vec2 o) {

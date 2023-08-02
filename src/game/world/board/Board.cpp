@@ -41,7 +41,7 @@ void Board::render() {
   }
 }
 
-void Board::update() {
+void Board::update(uint32_t timeElapsed) {
   std::cout << "update..." << std::endl;
 }
 

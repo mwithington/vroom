@@ -11,7 +11,10 @@ class Vec2 {
     void transpose(Vec2 vector);
 
     Vec2 add(Vec2 o);
+    void mutAdd(Vec2 o);
     Vec2 sub(Vec2 o);
+    void mutSub(Vec2 o);
+    void scale(float s);
     float dot(Vec2 o);
     float mag();
 
