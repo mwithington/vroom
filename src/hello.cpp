@@ -127,10 +127,12 @@ int main()
     uint32_t currentTime = 0;
     uint32_t gameTimeElapsed = 0;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::cout << "clock: " << std::clock() << std::endl;
+    std::cout << "clocks per sec: " << CLOCKS_PER_SEC << std::endl;
     while (!glfwWindowShouldClose(window))
     {
       currentTime = std::clock();
-      gameTimeElapsed = (currentTime - lastTime) / (double)(CLOCKS_PER_SEC / 1000);
+      gameTimeElapsed = (currentTime - lastTime) / (double)(CLOCKS_PER_SEC) * 1000;
       handleInput();
 
       update(entityList, gameTimeElapsed);
