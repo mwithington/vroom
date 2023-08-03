@@ -23,7 +23,7 @@ void Tile::render() {
   std::cout << type;
 }
 
-void Tile::update(uint32_t timeElapsed) {
+void Tile::update(double timeElapsed) {
   std::cout << "update..." << std::endl;
 }
 

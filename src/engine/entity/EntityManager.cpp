@@ -27,7 +27,7 @@ void EntityManager::markForRemoval(Entity* e) {
   this->removalList.push_back(e);
 }
 
-void EntityManager::update(uint32_t timeElapsed) {
+void EntityManager::update(double timeElapsed) {
   // update
   for (int i = 0; i < entityList.size(); i++) {
     entityList.at(i)->update(timeElapsed);

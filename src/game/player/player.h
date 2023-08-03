@@ -25,7 +25,7 @@ class Player: public Entity, public Eventful {
 
     // Methods from Entity
     void init() override;
-    void update(uint32_t) override;
+    void update(double) override;
     void render() override;
     void destroy() override;
 };

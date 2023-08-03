@@ -14,7 +14,7 @@ class Board: Entity {
     Board(int width, int height, Tile** tiles);
 
     void init() override;
-    void update(uint32_t) override;
+    void update(double) override;
     void render() override;
     void destroy() override;
     Tile** getTiles();

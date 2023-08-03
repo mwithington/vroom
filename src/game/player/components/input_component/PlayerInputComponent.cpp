@@ -1,11 +1,11 @@
 #include "PlayerInputComponent.h"
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
 PlayerInputComponent::PlayerInputComponent() {}
 
-void PlayerInputComponent::update(Player& player, uint32_t timeElapsed) {
-  const float speedFun = 0.8f;
+void PlayerInputComponent::update(Player& player, double timeElapsed) {
   Vec2 direction = Vec2();
   if(Keyboard::getInstance()->isKeyDown(KEY_W)) {
     direction.y +=1;
@@ -26,30 +26,31 @@ void PlayerInputComponent::update(Player& player, uint32_t timeElapsed) {
   direction.norm();
 
   if (!std::isnan(direction.mag())) {
-    float timestep = (timeElapsed ? timeElapsed : 1) / 1000.0f;
-    direction.scale(player.speed * timestep);
+    double interval = timeElapsed;
+    std::cout << "interval: " << interval << ": timeElapsed" << timeElapsed << std::endl;
+    direction.scale(player.speed * interval);
     player.pos.mutAdd(direction);
     std::cout << "x:" << player.pos.x << " y:" << player.pos.y << std::endl;
   }
 
 }
 
-void PlayerInputComponent::wrong_update(Player& player, uint32_t timeElapsed) {
-  float timestep = (timeElapsed ? timeElapsed : 1) / 1000.0f;
+void PlayerInputComponent::wrong_update(Player& player, double timeElapsed) {
+  float interval = (timeElapsed ? timeElapsed : 1) / 1000.0f;
   if(Keyboard::getInstance()->isKeyDown(KEY_W)) {
-    player.pos.y += (player.speed * timestep);
+    player.pos.y += (player.speed * interval);
   }
 
   if(Keyboard::getInstance()->isKeyDown(KEY_S)) {
-    player.pos.y -= (player.speed * timestep);
+    player.pos.y -= (player.speed * interval);
   }
 
   if(Keyboard::getInstance()->isKeyDown(KEY_D)) {
-    player.pos.x += (player.speed * timestep);
+    player.pos.x += (player.speed * interval);
   }
 
   if(Keyboard::getInstance()->isKeyDown(KEY_A)) {
-    player.pos.x -= (player.speed * timestep);
+    player.pos.x -= (player.speed * interval);
   }
 
   std::cout << "x:" << player.pos.x << " y:" << player.pos.y << std::endl;

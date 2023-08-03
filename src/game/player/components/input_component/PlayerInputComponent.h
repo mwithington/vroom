@@ -8,6 +8,6 @@ class Player;
 class PlayerInputComponent {
   public:
     PlayerInputComponent();
-    void update(Player& player, uint32_t);
-    void wrong_update(Player& player, uint32_t);
+    void update(Player& player, double);
+    void wrong_update(Player& player, double);
 };

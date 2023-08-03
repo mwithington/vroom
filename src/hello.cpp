@@ -33,7 +33,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
-void update(std::vector<Entity*> entityList, uint32_t gameTimeElapsed);
+void update(std::vector<Entity*> entityList, double gameTimeElapsed);
 // void render(GLFWwindow* window, Camera* cam, std::vector<Entity*> entityList);
 void render(GLFWwindow* window);
 
@@ -125,14 +125,15 @@ int main()
     // Game loop
     uint32_t lastTime = std::clock();
     uint32_t currentTime = 0;
-    uint32_t gameTimeElapsed = 0;
+    double gameTimeElapsed = 0;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
     std::cout << "clock: " << std::clock() << std::endl;
     std::cout << "clocks per sec: " << CLOCKS_PER_SEC << std::endl;
     while (!glfwWindowShouldClose(window))
     {
       currentTime = std::clock();
-      gameTimeElapsed = (currentTime - lastTime) / (double)(CLOCKS_PER_SEC) * 1000;
+      // std::cout << currentTime << " : " <<  lastTime << std::endl;
+      gameTimeElapsed = ((currentTime - lastTime) / (double)(CLOCKS_PER_SEC));
       handleInput();
 
       update(entityList, gameTimeElapsed);
@@ -171,7 +172,7 @@ void handleInput() {
   glfwPollEvents();
 }
 
-void update(std::vector<Entity*> entityList, uint32_t gameTimeElapsed) {
+void update(std::vector<Entity*> entityList, double gameTimeElapsed) {
   for (int i = 0; i < entityList.size(); i++) {
      entityList[i]->update(gameTimeElapsed);
   }

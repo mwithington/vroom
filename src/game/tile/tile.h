@@ -12,7 +12,7 @@ class Tile: public Entity {
     Tile(Vec2 pos, int type);
     ~Tile();
     void init() override;
-    void update(uint32_t) override;
+    void update(double) override;
     void render() override;
     void destroy() override;
     Vec2 getPos();
