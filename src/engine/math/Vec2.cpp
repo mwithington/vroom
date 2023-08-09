@@ -21,42 +21,57 @@ void Vec2::transpose(Vec2 vector) {
 }
 
 Vec2 Vec2::add(Vec2 o) {
-  return Vec2(this->x + o.x, this->y + o.y);
+  return Vec2(x + o.x, y + o.y);
+}
+
+void Vec2::mutAdd(Vec2 o) {
+  x += o.x;
+  y += o.y;
 }
 
 Vec2 Vec2::sub(Vec2 o) {
-  return Vec2(this->x - o.x, this->y - o.y);
+  return Vec2(x - o.x, y - o.y);
+}
+
+void Vec2::mutSub(Vec2 o) {
+  x -= o.x;
+  y -= o.y;
+}
+
+void Vec2::scale(float s) {
+  x *= s;
+  y *= s;
 }
 
 float Vec2::dot(Vec2 o) {
-  return (this->x * o.x) + (this->y * o.y);
+  return (x * o.x) + (y * o.y);
 }
 
 void Vec2::norm() {
   const float len = this->mag();
 
-  this->x = x/len;
-  this->y = y/len;
+  x = x/len;
+  y = y/len;
 }
 
 Vec2 Vec2::toNorm() {
   const float len = this->mag();
 
-  return Vec2(this->x/len, this->y/len);
+  return Vec2(x/len, y/len);
 }
 
 Vec2 Vec2::operator+(const Vec2 o) {
-  return this->add(o);
+  return add(o);
 }
 
 Vec2 Vec2::operator-(const Vec2 o) {
-  return this->sub(o);
+  return sub(o);
 }
 
 float Vec2::operator*(const Vec2 o) {
-  return this->dot(o);
+  return dot(o);
 }
 
 float Vec2::mag() {
-  return std::sqrt((this->x*this->x) + (this->y*this->y));
+  return std::sqrt((x * x) + (y * y));
 }

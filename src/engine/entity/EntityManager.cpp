@@ -27,10 +27,10 @@ void EntityManager::markForRemoval(Entity* e) {
   this->removalList.push_back(e);
 }
 
-void EntityManager::update() {
+void EntityManager::update(double timeElapsed) {
   // update
   for (int i = 0; i < entityList.size(); i++) {
-    entityList.at(i)->update();
+    entityList.at(i)->update(timeElapsed);
   }
 
   // remove stale refs

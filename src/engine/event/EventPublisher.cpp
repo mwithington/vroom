@@ -11,7 +11,7 @@ void EventPublisher::publish(Event &event) {
   for (int i = 0; i < subscribers.size(); i++) {
     auto fn = subscribers[i].second;
     auto sub = subscribers[i].first;
-    std::cout << "running fn..." << std::endl;
+    // std::cout << "running fn..." << std::endl;
     fn(sub, event);
   }
 }

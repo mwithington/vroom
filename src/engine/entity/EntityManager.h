@@ -15,5 +15,5 @@ class EntityManager {
     void addEntity(Entity* e);
     void markForRemoval(Entity* e);
 
-    void update();
+    void update(double);
 };

@@ -35,6 +35,6 @@ void Keyboard::setKey(int key, bool value) {
   }
   instance->keys[key] = value;
   Event event = Event{ key, value ? "key_down" : "key_up" };
-  std::cout << "publishing event" << std::endl;
+  // std::cout << "publishing event" << std::endl;
   instance->keyboardEvents->publish(event);
 }

@@ -1,5 +1,6 @@
 #include "./tile.h"
 #include <iostream>
+#include <stdint.h>
 
 Tile::Tile() {
   this->pos = Vec2();
@@ -22,7 +23,7 @@ void Tile::render() {
   std::cout << type;
 }
 
-void Tile::update() {
+void Tile::update(double timeElapsed) {
   std::cout << "update..." << std::endl;
 }
 

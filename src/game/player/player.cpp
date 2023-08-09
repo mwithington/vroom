@@ -1,10 +1,9 @@
-#include "./player.h"
-#include <functional>
-#include <iostream>
+#include "player.h"
+
 
 Player::Player() {
-  // (Player::*)(Event*)
-  // Keyboard::getInstance()->keyboardEvents->subscribe(std::bind(&Player::onKeyboardEvent, this, std::placeholders::_1));
+  speed = 5.0f;
+  inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
 }
 
 void Player::init() {
@@ -12,11 +11,11 @@ void Player::init() {
 }
 
 void Player::onKeyboardEvent(void* player, Event &event){
-  std::cout << "Ingest Keyboard Event: " << event.type << ":" << event.data;
+  // std::cout << "Ingest Keyboard Event: " << event.type << ":" << event.data;
 }
 
-void Player::update() {
-  // std::cout << "update..." << std::endl;
+void Player::update(double timeElapsed) {
+  inputComponent->update(*this, timeElapsed);
 }
 
 void Player::render() {
