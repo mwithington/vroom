@@ -2,7 +2,7 @@
 
 
 Player::Player() {
-  speed = 1.0f;
+  speed = 5.0f;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
 }
 

@@ -1,12 +1,15 @@
+#include <cstdint>
 #include <iostream>
 #include <ostream>
 #include <stdint.h>
 #include <string>
 #include <time.h>
+#include <tuple>
 #include <vector>
 #include <ctime>
 #include <chrono>
 #include <thread>
+// #define CLOCKS_PER_SEC 100000
 
 // GLAD
 #define GLAD_GL_IMPLEMENTATION
@@ -123,17 +126,19 @@ int main()
     std::cout << "time: " << micros << std::endl;
 
     // Game loop
-    uint32_t lastTime = std::clock();
+    uint32_t lastTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     uint32_t currentTime = 0;
     double gameTimeElapsed = 0;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
     std::cout << "clock: " << std::clock() << std::endl;
     std::cout << "clocks per sec: " << CLOCKS_PER_SEC << std::endl;
+
     while (!glfwWindowShouldClose(window))
     {
-      currentTime = std::clock();
-      // std::cout << currentTime << " : " <<  lastTime << std::endl;
-      gameTimeElapsed = ((currentTime - lastTime) / (double)(CLOCKS_PER_SEC));
+      currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+      gameTimeElapsed = (currentTime - lastTime);
+
+      // std::cout << "itz tiiiime: " << currTimeMsEpoch << std::endl;
       handleInput();
 
       update(entityList, gameTimeElapsed);

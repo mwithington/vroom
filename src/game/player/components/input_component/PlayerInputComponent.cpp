@@ -26,7 +26,7 @@ void PlayerInputComponent::update(Player& player, double timeElapsed) {
   direction.norm();
 
   if (!std::isnan(direction.mag())) {
-    double interval = timeElapsed;
+    double interval = (timeElapsed / 1000);
     std::cout << "interval: " << interval << ": timeElapsed" << timeElapsed << std::endl;
     direction.scale(player.speed * interval);
     player.pos.mutAdd(direction);
