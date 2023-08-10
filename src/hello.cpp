@@ -43,7 +43,7 @@ void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
 void update(std::vector<Entity*> entityList, double gameTimeElapsed);
-void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO);
+void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Player& player);
 
 void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shaderProgram);
 
@@ -233,7 +233,8 @@ int main()
     update(entityList, gameTimeElapsed);
 
     // TODO(Tom): create timer loop to limit redraws (maybe a config flag for uncapped fps)
-    render(window, shaderProgram, VAO);
+
+    render(window, shaderProgram, VAO, p);
     lastTime = currentTime;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -246,15 +247,24 @@ int main()
 
 
 void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shaderProgram) {
-  const int WIDTH = configSvc.getIntValue("WINDOW_WIDTH", 600), HEIGHT = configSvc.getIntValue("WINDOW_HEIGHT", 800);
-  const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0)
-  const double scaledPlayerX = (player.pos.x - gridWidth) / (gridWidth);
-  const double scaledPlayerY = (player.pos.y - gridHeight) / (gridHeight);
+  const int WIDTH = 600, HEIGHT = 800;
+  const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0);
+  const double scaledPlayerX = (player.pos.x - gridWidth) / gridWidth;
+  const double scaledPlayerY = (player.pos.y - gridHeight) / gridHeight;
+
+
+  // const double scaledGridWidth = gridWidth
+  const double x1 = scaledPlayerX + ((25.0/WIDTH)/gridWidth);
+  const double y1 = scaledPlayerY + ((25.0/HEIGHT)/gridHeight);
+  const double x2 = scaledPlayerX - ((25.0/WIDTH)/gridWidth);
+  const double y2 = scaledPlayerY + ((25.0/HEIGHT)/gridHeight);
+  const double x3 = scaledPlayerX;
+  const double y3 = scaledPlayerY - ((25.0/HEIGHT)/gridHeight);
 
   float vertices[] = {
-    0.5f,  0.5f, 0.0f,  // top right
-    0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  // bottom left
+    x1, y1, 0.0f,  // top right
+    x2, y2, 0.0f,  // bottom right
+    x3, y3, 0.0f,  // bottom left
     -0.5f,  0.5f, 0.0f   // top left
   };
   unsigned int indices[] = {  // note that we start from 0!
@@ -285,10 +295,7 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
 
   // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
   // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-  glBindVertexArray(0);
-
-
-
+  // glBindVertexArray(0);
 };
 
 // Is called whenever a key is pressed/released via GLFW
@@ -318,9 +325,8 @@ void update(std::vector<Entity*> entityList, double gameTimeElapsed) {
   }
 }
 
-void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO) {
+void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Player& player) {
   // TODO(Tom): have some global counter and only render if it's been >1/60th of a second since last frame
-
 
   // Clear the colorbuffer
   glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -328,9 +334,10 @@ void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO) {
 
   // Render world entities
   glUseProgram(shaderProgram);
-  glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-                          //glDrawArrays(GL_TRIANGLES, 0, 6);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+  playerRenderTestFunc(player, window, shaderProgram);
+  // glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+  //glDrawArrays(GL_TRIANGLES, 0, 6);
+  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
   // Swap the screen buffers
   glfwSwapBuffers(window);
