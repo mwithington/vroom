@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "../../../engine/entity/entity.h"
 #include "../../tile/tile.h"
 

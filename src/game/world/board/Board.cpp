@@ -1,10 +1,11 @@
 #include "Board.h"
-#include <iostream>
 
 Board::Board() {
+  std::cout << "creating board" << std::endl;
   this->width = 0;
   this->height = 0;
   this->tiles = NULL;
+  std::cout << "done creating board" << std::endl;
 }
 
 Board::Board(int width, int height) {
