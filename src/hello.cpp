@@ -254,21 +254,25 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
 
 
   // const double scaledGridWidth = gridWidth
-  const double x1 = scaledPlayerX + ((25.0/WIDTH)/gridWidth);
-  const double y1 = scaledPlayerY + ((25.0/HEIGHT)/gridHeight);
-  const double x2 = scaledPlayerX - ((25.0/WIDTH)/gridWidth);
-  const double y2 = scaledPlayerY + ((25.0/HEIGHT)/gridHeight);
+  const double x1 = scaledPlayerX + ((25.0/WIDTH));
+  const double y1 = scaledPlayerY + ((25.0/HEIGHT));
+  const double x2 = scaledPlayerX - ((25.0/WIDTH));
+  const double y2 = scaledPlayerY + ((25.0/HEIGHT));
   const double x3 = scaledPlayerX;
-  const double y3 = scaledPlayerY - ((25.0/HEIGHT)/gridHeight);
+  const double y3 = scaledPlayerY - ((25.0/HEIGHT));
 
   float vertices[] = {
-    x1, y1, 0.0f,  // top right
-    x2, y2, 0.0f,  // bottom right
-    x3, y3, 0.0f,  // bottom left
+    (float)x1, (float)y1, 0.0f,  // top right
+    (float)x2, (float)y2, 0.0f,  // bottom right
+    (float)x3, (float)y3, 0.0f,  // bottom left
     -0.5f,  0.5f, 0.0f   // top left
   };
+  std::cout << "x1,y1: " << x1 << "," << y1 << std::endl;
+  std::cout << "x2,y2: "<< x2 << "," << y2 << std::endl;
+  std::cout << "x3,y3: " << x3 << "," << y3 << std::endl;
+
   unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,  // first Triangle
+    0, 1, 2,  // first Triangle
   };
 
   unsigned int VBO, VAO, EBO;
