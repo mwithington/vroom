@@ -1,4 +1,4 @@
-#import "Mesh.h"
+#include "Mesh.h"
 
 Mesh::Mesh() {
   this->verts = std::vector<double>();
