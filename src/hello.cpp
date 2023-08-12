@@ -118,6 +118,7 @@ int main()
   Player p = Player();
   p.pos.x = 300;
   p.pos.y = 400;
+  p.speed = configSvc.getIntValue("PLAYER_SPEED", 50);
   p.init();
   Board b = Board(13, 11);
 

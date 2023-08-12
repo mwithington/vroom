@@ -3,7 +3,6 @@
 
 Player::Player() {
   std::cout << "creating player" << std::endl;
-  speed = 5.0f;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
   std::cout << "done creating player" << std::endl;
 }
