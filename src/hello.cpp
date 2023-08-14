@@ -1,3 +1,4 @@
+#include "engine/graphics/MeshService.h"
 #include <cstdint>
 #include <iostream>
 #include <ostream>
@@ -114,6 +115,8 @@ int main()
   glViewport(0, 0, WIDTH, HEIGHT);
 
   Tile t = Tile();
+  // Define MeshService
+  MeshService* meshService = MeshService::getInstance();
 
   Player p = Player();
   p.pos.x = 300;

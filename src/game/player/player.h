@@ -8,6 +8,9 @@
 #include "../../engine/event/Event.h"
 #include "../../engine/event/Eventful.h"
 
+class PlayerRenderComponent;
+#include "./components/render_component/PlayerRenderComponent.h"
+
 class PlayerInputComponent;
 #include "./components/input_component/PlayerInputComponent.h"
 #include "./components/input_component/PlayerInputComponentFactory.h"
@@ -15,12 +18,18 @@ class PlayerInputComponent;
 
 class Player: public Entity, public Eventful {
   private:
+    // Variables
     PlayerInputComponent* inputComponent;
+    PlayerRenderComponent* renderComponent;
+
+    // Static Methods
     static void onKeyboardEvent(void* player, Event &event);
 
   public:
+    // Ctor
     Player();
 
+    //Variables
     float speed;
 
     // Methods from Entity

@@ -4,6 +4,7 @@
 Player::Player() {
   std::cout << "creating player" << std::endl;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
+  renderComponent = new PlayerRenderComponent(0);
   std::cout << "done creating player" << std::endl;
 }
 

@@ -1,4 +1,7 @@
 #include "MeshService.h"
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 MeshService* MeshService::instance = nullptr;
@@ -29,3 +32,30 @@ void MeshService::addMeshs(std::vector<Mesh> additionalMeshes) {
     this->meshes.push_back(mesh);
   }
 }
+
+void MeshService::loadMesh(std::string file) {
+  std::ifstream meshFile("../../player.mesh");
+  std::string line;
+  std::vector<float> verts;
+  std::vector<int> faces;
+
+  bool readingFaces = false;
+
+  while (std::getline(meshFile, line)) {
+    if(!line.empty()) {
+      if (readingFaces) {
+        faces.push_back(1);
+      } else {
+
+        verts.push_back(1);
+      }
+    } else {
+      readingFaces = !readingFaces;
+    }
+
+  }
+
+  meshFile.close();
+}
+
+void MeshService::loadMeshes(std::string file) {}
