@@ -12,7 +12,8 @@ find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 set(OpenGL_GL_PREFERENCE STATIC)
 
-include_directories("~/tools/glad/include")
+include_directories("/Users/michael.withington/tools/glad/include")
 find_package(glfw3 REQUIRED)
 
-target_link_libraries(vroom PRIVATE glfw GL)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL -framework Cocoa -framework IOKit")
+target_link_libraries(vroom PRIVATE glfw)

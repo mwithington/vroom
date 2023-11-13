@@ -1,8 +1,13 @@
 #include "PlayerRenderComponent.h"
+#include <iostream>
+#include <ostream>
 
 PlayerRenderComponent::PlayerRenderComponent() {}
 PlayerRenderComponent::PlayerRenderComponent(int meshId) {
+  MeshService::getInstance()->loadMesh("test");
+  std::cout << "loaded player mesh" << std::endl;
   this->mesh = MeshService::getInstance()->getMesh(meshId);
+  std::cout << "made mesh & loaded" << std::endl;
   this->vertices = std::vector<float>();
 };
 
@@ -34,6 +39,8 @@ void PlayerRenderComponent::render(Player& player, unsigned int shaderprogram){
 
   RenderService::getInstance()->renderMesh(vertices, mesh->faces);
 
+  /*
+   * TODO(MIKE): Remove this
   unsigned int VBO, VAO, EBO;
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
@@ -52,4 +59,5 @@ void PlayerRenderComponent::render(Player& player, unsigned int shaderprogram){
 
   // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+  */
 };

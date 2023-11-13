@@ -1,9 +1,12 @@
 #include "player.h"
+#include <iostream>
 
 
 Player::Player() {
   std::cout << "creating player" << std::endl;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
+  std::cout << "created inputComponent" << std::endl;
+  std::cout << "creating renderComponent" << std::endl;
   renderComponent = new PlayerRenderComponent(0);
   std::cout << "done creating player" << std::endl;
 }

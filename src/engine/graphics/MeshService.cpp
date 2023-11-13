@@ -1,8 +1,4 @@
 #include "MeshService.h"
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 MeshService* MeshService::instance = nullptr;
 
@@ -19,6 +15,7 @@ MeshService* MeshService::getInstance() {
 }
 
 Mesh* MeshService::getMesh(int id) {
+  std::cout << "size: " << meshes.size() << std::endl;
   return &meshes.at(id);
 }
 
@@ -42,20 +39,24 @@ void MeshService::loadMesh(std::string file) {
   bool readingFaces = false;
 
   while (std::getline(meshFile, line)) {
+    std::istringstream iss(line);
+    std::string token;
     if(!line.empty()) {
       if (readingFaces) {
-        faces.push_back(1);
+        while(std::getline(iss, token, ',')) {
+          faces.push_back(std::stoi(token));
+        }
       } else {
-
-        verts.push_back(1);
+        while(std::getline(iss, token, ',')) {
+          verts.push_back(std::stof(token));
+        }
       }
     } else {
       readingFaces = !readingFaces;
     }
-
   }
-
   meshFile.close();
+  this->addMesh(Mesh(verts, faces));
 }
 
 void MeshService::loadMeshes(std::string file) {}

@@ -4,9 +4,9 @@ class Mesh {
   public:
     // Ctors
     Mesh();
-    Mesh(std::vector<double> verts, std::vector<int> faces);
+    Mesh(std::vector<float> verts, std::vector<int> faces);
 
     // Variables
-    std::vector<double> verts;
+    std::vector<float> verts;
     std::vector<int> faces;
 };
