@@ -18,12 +18,12 @@ void PlayerRenderComponent::render(Player& player, unsigned int shaderprogram){
   const double scaledPlayerX = (player.pos.x - gridWidth) / gridWidth;
   const double scaledPlayerY = (player.pos.y - gridHeight) / gridHeight;
 
-  const double x1 = scaledPlayerX + ((25.0/WIDTH));
-  const double y1 = scaledPlayerY + ((25.0/HEIGHT));
-  const double x2 = scaledPlayerX - ((25.0/WIDTH));
-  const double y2 = scaledPlayerY + ((25.0/HEIGHT));
-  const double x3 = scaledPlayerX;
-  const double y3 = scaledPlayerY - ((25.0/HEIGHT));
+  const double x1 = scaledPlayerX + mesh->verts[0];
+  const double y1 = scaledPlayerY + mesh->verts[1];
+  const double x2 = scaledPlayerX + mesh->verts[3];
+  const double y2 = scaledPlayerY + mesh->verts[4];
+  const double x3 = scaledPlayerX + mesh->verts[6];
+  const double y3 = scaledPlayerY + mesh->verts[7];
 
   this->vertices.push_back(x1);
   this->vertices.push_back(y1);

@@ -19,7 +19,17 @@ void RenderService::renderMesh(Mesh* mesh, int scale) {
 
 void RenderService::renderMesh(std::vector<float> verts, std::vector<int> faces) {
   unsigned int VBO, VAO, EBO;
-  std::cout << "entering renderMesh function" << std::endl;
+  /**
+  std::cout << "entering renderMesh function: " << std::endl;
+  for (size_t i = 0; i < verts.size(); i++) {
+    std::cout << "verts:" << verts[i] <<  std::endl;
+  }
+
+  for (size_t i = 0; i < faces.size(); i++) {
+    std::cout << "faces:" << faces[i] <<  std::endl;
+  }
+  */
+
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
   glGenBuffers(1, &EBO);
@@ -27,7 +37,7 @@ void RenderService::renderMesh(std::vector<float> verts, std::vector<int> faces)
   glBindVertexArray(VAO);
 
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float), &verts[0], GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float), &verts, GL_STATIC_DRAW);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int), &faces[0], GL_STATIC_DRAW);

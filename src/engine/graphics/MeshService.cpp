@@ -1,4 +1,6 @@
 #include "MeshService.h"
+#include <fstream>
+#include <string>
 
 MeshService* MeshService::instance = nullptr;
 
@@ -31,29 +33,41 @@ void MeshService::addMeshs(std::vector<Mesh> additionalMeshes) {
 }
 
 void MeshService::loadMesh(std::string file) {
-  std::ifstream meshFile("../../player.mesh");
+  std::cout << "loading meshfile" << std::endl;
+  std::ifstream meshFile("./src/player.mesh");
   std::string line;
   std::vector<float> verts;
   std::vector<int> faces;
 
   bool readingFaces = false;
-
-  while (std::getline(meshFile, line)) {
-    std::istringstream iss(line);
-    std::string token;
-    if(!line.empty()) {
-      if (readingFaces) {
-        while(std::getline(iss, token, ',')) {
-          faces.push_back(std::stoi(token));
-        }
-      } else {
-        while(std::getline(iss, token, ',')) {
-          verts.push_back(std::stof(token));
+  if(meshFile.is_open()) {
+    std::cout << "open test text"<< line << std::endl;
+    if(meshFile.good()){
+      while (std::getline(meshFile, line)) {
+        std::istringstream iss(line);
+        std::string token;
+        if(!line.empty()) {
+          if (readingFaces) {
+            std::cout << "found a face" << std::endl;
+            while(std::getline(iss, token, ',')) {
+              faces.push_back(std::stoi(token));
+            }
+          } else {
+            std::cout << "found a vert" << std::endl;
+            while(std::getline(iss, token, ',')) {
+              verts.push_back(std::stof(token));
+            }
+          }
+        } else {
+          readingFaces = !readingFaces;
         }
       }
-    } else {
-      readingFaces = !readingFaces;
     }
+  }
+
+
+  for (size_t i = 0; i < faces.size(); i++) {
+    std::cout << "faces: " << faces[i] << std::endl;
   }
   meshFile.close();
   this->addMesh(Mesh(verts, faces));

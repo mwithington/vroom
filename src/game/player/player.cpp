@@ -24,7 +24,12 @@ void Player::update(double timeElapsed) {
 }
 
 void Player::render() {
+  std::cout << "render override is this needed?..." << std::endl;
+}
+
+void Player::render(unsigned int shaderProgram) {
   std::cout << "render..." << std::endl;
+  renderComponent->render(*this, shaderProgram);
 }
 
 void Player::destroy() {

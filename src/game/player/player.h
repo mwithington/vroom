@@ -36,5 +36,6 @@ class Player: public Entity, public Eventful {
     void init() override;
     void update(double) override;
     void render() override;
+    void render(unsigned int shaderProgram);
     void destroy() override;
 };

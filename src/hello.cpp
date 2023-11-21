@@ -112,7 +112,10 @@ int main()
   std::cout << "Loaded OpenGL " << GLAD_VERSION_MAJOR(version) << "." << GLAD_VERSION_MINOR(version) << std::endl;
 
   // Define the viewport dimensions
-  glViewport(0, 0, WIDTH, HEIGHT);
+  int width;
+  int height;
+  glfwGetFramebufferSize(window, &width, &height);
+  glViewport(0, 0, width, height);
 
   Tile t = Tile();
   // Define MeshService
@@ -120,7 +123,7 @@ int main()
 
   Player p = Player();
   p.pos.x = 300;
-  p.pos.y = 400;
+  p.pos.y = 300;
   p.speed = configSvc.getIntValue("PLAYER_SPEED", 50);
   p.init();
   Board b = Board(13, 11);
@@ -297,13 +300,6 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
 
   // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
   glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  // remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-  //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-  // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-  // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-  // glBindVertexArray(0);
 };
 
 // Is called whenever a key is pressed/released via GLFW
@@ -342,7 +338,8 @@ void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Pl
 
   // Render world entities
   glUseProgram(shaderProgram);
-  playerRenderTestFunc(player, window, shaderProgram);
+  //playerRenderTestFunc(player, window, shaderProgram);
+  player.render(shaderProgram);
   // glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
   //glDrawArrays(GL_TRIANGLES, 0, 6);
   glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
