@@ -28,7 +28,7 @@ void Player::render() {
 }
 
 void Player::render(unsigned int shaderProgram) {
-  std::cout << "render..." << std::endl;
+  // std::cout << "render..." << std::endl;
   renderComponent->render(*this, shaderProgram);
 }
 

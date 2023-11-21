@@ -199,7 +199,7 @@ int main()
     0, 1, 3,  // first Triangle
     1, 2, 3   // second Triangle
   };
-
+/*
   unsigned int VBO, VAO, EBO;
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
@@ -225,8 +225,8 @@ int main()
   // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
   // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
   glBindVertexArray(0);
-
-  vertices[0] -= 0.00001f;
+*/
+  // vertices[0] -= 0.00001f;
 
   while (!glfwWindowShouldClose(window))
   {
@@ -241,7 +241,7 @@ int main()
 
     // TODO(Tom): create timer loop to limit redraws (maybe a config flag for uncapped fps)
 
-    render(window, shaderProgram, VAO, p);
+    render(window, shaderProgram, 0, p);
     lastTime = currentTime;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -254,7 +254,7 @@ int main()
 
 
 void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shaderProgram) {
-  const int WIDTH = 600, HEIGHT = 800;
+  const int WIDTH = 900, HEIGHT = 600;
   const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0);
   const double scaledPlayerX = (player.pos.x - gridWidth) / gridWidth;
   const double scaledPlayerY = (player.pos.y - gridHeight) / gridHeight;
@@ -265,14 +265,16 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
   const double y1 = scaledPlayerY + ((25.0/HEIGHT));
   const double x2 = scaledPlayerX - ((25.0/WIDTH));
   const double y2 = scaledPlayerY + ((25.0/HEIGHT));
-  const double x3 = scaledPlayerX;
+  const double x3 = scaledPlayerX + (25.0/WIDTH);
   const double y3 = scaledPlayerY - ((25.0/HEIGHT));
+  const double x4 = scaledPlayerX - (25.0/WIDTH);
+  const double y4 = scaledPlayerY - ((25.0/HEIGHT));
 
   float vertices[] = {
     (float)x1, (float)y1, 0.0f,  // top right
     (float)x2, (float)y2, 0.0f,  // bottom right
     (float)x3, (float)y3, 0.0f,  // bottom left
-    -0.5f,  0.5f, 0.0f   // top left
+    (float)x4, (float)y4, 0.0f   // top left
   };
   std::cout << "x1,y1: " << x1 << "," << y1 << std::endl;
   std::cout << "x2,y2: "<< x2 << "," << y2 << std::endl;
@@ -280,8 +282,10 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
 
   unsigned int indices[] = {  // note that we start from 0!
     0, 1, 2,  // first Triangle
+    1, 2, 3
   };
 
+  glUseProgram(shaderProgram);
   unsigned int VBO, VAO, EBO;
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
@@ -300,6 +304,7 @@ void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shade
 
   // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
   glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 };
 
 // Is called whenever a key is pressed/released via GLFW
@@ -337,13 +342,11 @@ void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Pl
   glClear(GL_COLOR_BUFFER_BIT);
 
   // Render world entities
-  glUseProgram(shaderProgram);
-  //playerRenderTestFunc(player, window, shaderProgram);
-  player.render(shaderProgram);
+  // playerRenderTestFunc(player, window, shaderProgram);
   // glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
   //glDrawArrays(GL_TRIANGLES, 0, 6);
-  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
+  player.render(shaderProgram);
   // Swap the screen buffers
   glfwSwapBuffers(window);
 }

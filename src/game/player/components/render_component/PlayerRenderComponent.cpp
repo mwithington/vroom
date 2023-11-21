@@ -13,17 +13,19 @@ PlayerRenderComponent::PlayerRenderComponent(int meshId) {
 
 void PlayerRenderComponent::render(Player& player, unsigned int shaderprogram){
   this->vertices.clear();
-  const int WIDTH = 600, HEIGHT = 800;
+  const int WIDTH = 900, HEIGHT = 600;
   const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0);
   const double scaledPlayerX = (player.pos.x - gridWidth) / gridWidth;
   const double scaledPlayerY = (player.pos.y - gridHeight) / gridHeight;
 
-  const double x1 = scaledPlayerX + mesh->verts[0];
-  const double y1 = scaledPlayerY + mesh->verts[1];
-  const double x2 = scaledPlayerX + mesh->verts[3];
-  const double y2 = scaledPlayerY + mesh->verts[4];
-  const double x3 = scaledPlayerX + mesh->verts[6];
-  const double y3 = scaledPlayerY + mesh->verts[7];
+  const double x1 = scaledPlayerX + (mesh->verts[0]/WIDTH);
+  const double y1 = scaledPlayerY + (mesh->verts[1]/HEIGHT);
+  const double x2 = scaledPlayerX + (mesh->verts[3]/WIDTH);
+  const double y2 = scaledPlayerY + (mesh->verts[4]/HEIGHT);
+  const double x3 = scaledPlayerX + (mesh->verts[6]/WIDTH);
+  const double y3 = scaledPlayerY + (mesh->verts[7]/HEIGHT);
+  const double x4 = scaledPlayerX + (mesh->verts[9]/WIDTH);
+  const double y4 = scaledPlayerY + (mesh->verts[10]/HEIGHT);
 
   this->vertices.push_back(x1);
   this->vertices.push_back(y1);
@@ -37,7 +39,13 @@ void PlayerRenderComponent::render(Player& player, unsigned int shaderprogram){
   this->vertices.push_back(y3);
   this->vertices.push_back(0.0f);
 
-  RenderService::getInstance()->renderMesh(vertices, mesh->faces);
+  this->vertices.push_back(x4);
+  this->vertices.push_back(y4);
+  this->vertices.push_back(0.0f);
+
+  std::cout << "scaled: " << x1 << ", " << y1 << std::endl;
+
+  RenderService::getInstance()->renderMesh(vertices, mesh->faces, shaderprogram);
 
   /*
    * TODO(MIKE): Remove this
