@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "./entity.h"
+#include "../../game/components/RenderComponent.h"
 
 class EntityManager {
   private:
@@ -16,4 +17,5 @@ class EntityManager {
     void markForRemoval(Entity* e);
 
     void update(double);
+    void render();
 };

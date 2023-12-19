@@ -1,3 +1,4 @@
+#include "engine/entity/EntityManager.h"
 #include "engine/graphics/MeshService.h"
 #include <cstdint>
 #include <iostream>
@@ -44,9 +45,8 @@ void glfwErrorCallback(int error, const char* description);
 
 void handleInput();
 void update(std::vector<Entity*> entityList, double gameTimeElapsed);
-void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Player& player);
+void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, EntityManager* entityManager);
 
-void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shaderProgram);
 
 int main()
 {
@@ -121,11 +121,7 @@ int main()
   // Define MeshService
   MeshService* meshService = MeshService::getInstance();
 
-  Player p = Player();
-  p.pos.x = 300;
-  p.pos.y = 300;
-  p.speed = configSvc.getIntValue("PLAYER_SPEED", 50);
-  p.init();
+
   Board b = Board(13, 11);
 
   // Generate a board with preset tiles
@@ -133,11 +129,7 @@ int main()
   b.getTiles()[3][3].setType(5);
 
   std::cout << "Tile: " << "x: " << t.pos.x << ", y: " << t.pos.y << std::endl;
-  std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
   b.render();
-
-  auto entityList = std::vector<Entity*>();
-  entityList.push_back(&p);
 
   uint32_t micros = (std::clock() - start) / (double)(CLOCKS_PER_SEC);
   std::cout << "time: " << micros << std::endl;
@@ -189,44 +181,18 @@ int main()
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 
-  float vertices[] = {
-    0.5f,  0.5f, 0.0f,  // top right
-    0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  // bottom left
-    -0.5f,  0.5f, 0.0f   // top left
-  };
-  unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,  // first Triangle
-    1, 2, 3   // second Triangle
-  };
-/*
-  unsigned int VBO, VAO, EBO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-  glGenBuffers(1, &EBO);
-  // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-  glBindVertexArray(VAO);
+  // Create player
+  Player p = Player(shaderProgram);
+  p.pos.x = 300;
+  p.pos.y = 300;
+  p.speed = configSvc.getIntValue("PLAYER_SPEED", 50);
+  p.init();
+  std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
 
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-  // remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-  //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-  // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-  // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-  glBindVertexArray(0);
-*/
-  // vertices[0] -= 0.00001f;
+  EntityManager* entityManager = EntityManager::getInstance();
+  entityManager->addEntity(&p);
+  auto entityList = std::vector<Entity*>();
+  entityList.push_back(&p);
 
   while (!glfwWindowShouldClose(window))
   {
@@ -241,7 +207,7 @@ int main()
 
     // TODO(Tom): create timer loop to limit redraws (maybe a config flag for uncapped fps)
 
-    render(window, shaderProgram, 0, p);
+    render(window, shaderProgram, 0, entityManager);
     lastTime = currentTime;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -251,61 +217,6 @@ int main()
   glfwTerminate();
   return 0;
 }
-
-
-void playerRenderTestFunc(Player& player, GLFWwindow* window, unsigned int shaderProgram) {
-  const int WIDTH = 900, HEIGHT = 600;
-  const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0);
-  const double scaledPlayerX = (player.pos.x - gridWidth) / gridWidth;
-  const double scaledPlayerY = (player.pos.y - gridHeight) / gridHeight;
-
-
-  // const double scaledGridWidth = gridWidth
-  const double x1 = scaledPlayerX + ((25.0/WIDTH));
-  const double y1 = scaledPlayerY + ((25.0/HEIGHT));
-  const double x2 = scaledPlayerX - ((25.0/WIDTH));
-  const double y2 = scaledPlayerY + ((25.0/HEIGHT));
-  const double x3 = scaledPlayerX + (25.0/WIDTH);
-  const double y3 = scaledPlayerY - ((25.0/HEIGHT));
-  const double x4 = scaledPlayerX - (25.0/WIDTH);
-  const double y4 = scaledPlayerY - ((25.0/HEIGHT));
-
-  float vertices[] = {
-    (float)x1, (float)y1, 0.0f,  // top right
-    (float)x2, (float)y2, 0.0f,  // bottom right
-    (float)x3, (float)y3, 0.0f,  // bottom left
-    (float)x4, (float)y4, 0.0f   // top left
-  };
-  std::cout << "x1,y1: " << x1 << "," << y1 << std::endl;
-  std::cout << "x2,y2: "<< x2 << "," << y2 << std::endl;
-  std::cout << "x3,y3: " << x3 << "," << y3 << std::endl;
-
-  unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 2,  // first Triangle
-    1, 2, 3
-  };
-
-  glUseProgram(shaderProgram);
-  unsigned int VBO, VAO, EBO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-  glGenBuffers(1, &EBO);
-  // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-  glBindVertexArray(VAO);
-
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-};
 
 // Is called whenever a key is pressed/released via GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -334,7 +245,7 @@ void update(std::vector<Entity*> entityList, double gameTimeElapsed) {
   }
 }
 
-void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Player& player) {
+void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, EntityManager* entityManager) {
   // TODO(Tom): have some global counter and only render if it's been >1/60th of a second since last frame
 
   // Clear the colorbuffer
@@ -342,11 +253,12 @@ void render(GLFWwindow* window, unsigned int shaderProgram, unsigned int VAO, Pl
   glClear(GL_COLOR_BUFFER_BIT);
 
   // Render world entities
-  // playerRenderTestFunc(player, window, shaderProgram);
   // glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
   //glDrawArrays(GL_TRIANGLES, 0, 6);
 
-  player.render(shaderProgram);
+  // player.render(shaderProgram);
+  entityManager->render();
+
   // Swap the screen buffers
   glfwSwapBuffers(window);
 }

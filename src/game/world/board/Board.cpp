@@ -53,3 +53,7 @@ void Board::destroy() {
 Tile** Board::getTiles() {
   return tiles;
 }
+
+bool Board::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+  return true;
+}

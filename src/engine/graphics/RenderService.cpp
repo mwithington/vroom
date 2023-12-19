@@ -19,16 +19,7 @@ void RenderService::renderMesh(Mesh* mesh, int scale) {
 
 void RenderService::renderMesh(std::vector<float> verts, std::vector<int> faces, unsigned int shaderProgram) {
   unsigned int VBO, VAO, EBO;
-  /**
-  std::cout << "entering renderMesh function: " << std::endl;
-  for (size_t i = 0; i < verts.size(); i++) {
-    std::cout << "verts:" << verts[i] <<  std::endl;
-  }
 
-  for (size_t i = 0; i < faces.size(); i++) {
-    std::cout << "faces:" << faces[i] <<  std::endl;
-  }
-  */
   glUseProgram(shaderProgram);
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);

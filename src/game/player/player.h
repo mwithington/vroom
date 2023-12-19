@@ -7,6 +7,7 @@
 #include "../../engine/input/Keys.h"
 #include "../../engine/event/Event.h"
 #include "../../engine/event/Eventful.h"
+#include "../components/ComponentTypes.h"
 
 class PlayerRenderComponent;
 #include "./components/render_component/PlayerRenderComponent.h"
@@ -27,7 +28,7 @@ class Player: public Entity, public Eventful {
 
   public:
     // Ctor
-    Player();
+    Player(unsigned int shaderprogram);
 
     //Variables
     float speed;
@@ -36,6 +37,7 @@ class Player: public Entity, public Eventful {
     void init() override;
     void update(double) override;
     void render() override;
-    void render(unsigned int shaderProgram);
     void destroy() override;
+
+    bool getComponent(Enums::ComponentTypes, void*) override;
 };

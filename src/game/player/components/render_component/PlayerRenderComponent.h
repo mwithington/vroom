@@ -7,14 +7,11 @@ class Player;
 #include "../../../../engine/graphics/Mesh.h"
 #include "../../../../engine/graphics/MeshService.h"
 #include "../../../../engine/graphics/RenderService.h"
+#include "../../../components/RenderComponent.h"
 
-class PlayerRenderComponent {
-  private:
-    Mesh* mesh;
-    std::vector<float> vertices;
-
+class PlayerRenderComponent: public RenderComponent {
   public:
     PlayerRenderComponent();
-    PlayerRenderComponent(int meshId);
-    void render(Player& player, unsigned int shaderprogram);
+    PlayerRenderComponent(int meshId, unsigned int shaderprogram);
+    // void render(Player& player);
 };

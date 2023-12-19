@@ -38,3 +38,7 @@ Vec2 Tile::getPos() {
 void Tile::setType(int type) {
   this->type = type;
 }
+
+bool Tile::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+  return true;
+}

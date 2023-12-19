@@ -1,4 +1,6 @@
 #include "./EntityManager.h"
+#include <algorithm>
+using namespace Enums;
 
 EntityManager::EntityManager() {
   this->entityList = std::vector<Entity*>();
@@ -46,4 +48,23 @@ void EntityManager::update(double timeElapsed) {
     removalList.at(i)->destroy();
   }
   removalList.clear();
+}
+
+void EntityManager::render() {
+  // Sort entityList in tempvar to be in DESC order
+  std::vector<Entity*> sortedEntityList = std::vector<Entity*>();
+  // std::sort();
+
+  for (size_t i = 0; i < entityList.size(); i++) {
+    Entity* tmpEntity = entityList[i];
+    RenderComponent* ptr = nullptr;
+    tmpEntity->getComponent(Enums::ComponentTypes::Render, ptr);
+    ptr->render(*tmpEntity);
+  }
+  // Highest render prio list
+  // Loop through and render
+}
+
+void mergeSort(std::vector<Entity*> tmpEnityList) {
+
 }
