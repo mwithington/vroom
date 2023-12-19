@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./out/bin/vroom.exe
+./out/bin/vroom

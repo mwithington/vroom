@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
 #include "../../../engine/entity/entity.h"
 #include "../../tile/tile.h"
+#include "../../components/ComponentTypes.h"
 
 class Board: Entity {
   private:
@@ -17,5 +19,6 @@ class Board: Entity {
     void update(double) override;
     void render() override;
     void destroy() override;
+    bool getComponent(Enums::ComponentTypes componentType, void* ptr) override;
     Tile** getTiles();
 };

@@ -7,6 +7,10 @@
 #include "../../engine/input/Keys.h"
 #include "../../engine/event/Event.h"
 #include "../../engine/event/Eventful.h"
+#include "../components/ComponentTypes.h"
+
+class PlayerRenderComponent;
+#include "./components/render_component/PlayerRenderComponent.h"
 
 class PlayerInputComponent;
 #include "./components/input_component/PlayerInputComponent.h"
@@ -15,12 +19,18 @@ class PlayerInputComponent;
 
 class Player: public Entity, public Eventful {
   private:
+    // Variables
     PlayerInputComponent* inputComponent;
+    PlayerRenderComponent* renderComponent;
+
+    // Static Methods
     static void onKeyboardEvent(void* player, Event &event);
 
   public:
-    Player();
+    // Ctor
+    Player(unsigned int shaderprogram);
 
+    //Variables
     float speed;
 
     // Methods from Entity
@@ -28,4 +38,6 @@ class Player: public Entity, public Eventful {
     void update(double) override;
     void render() override;
     void destroy() override;
+
+    bool getComponent(Enums::ComponentTypes, void*) override;
 };

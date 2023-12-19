@@ -3,6 +3,8 @@
 
 ConfigService::ConfigService() {}
 
+// TODO(Tom): vector at will throw oob if key doesn't exist, we should add try/catch
+
 void ConfigService::loadConfig(std::string path) {
   this->config = std::map<std::string, std::string>();
 

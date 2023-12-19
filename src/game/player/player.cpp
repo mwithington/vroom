@@ -1,9 +1,14 @@
 #include "player.h"
+#include <iostream>
 
 
-Player::Player() {
-  speed = 5.0f;
+Player::Player(unsigned int shaderprogram) {
+  std::cout << "creating player" << std::endl;
   inputComponent = PlayerInputComponentFactory::create(PlayerInputComponentType::DUMMY);
+  std::cout << "created inputComponent" << std::endl;
+  std::cout << "creating renderComponent" << std::endl;
+  renderComponent = new PlayerRenderComponent(0, shaderprogram);
+  std::cout << "done creating player" << std::endl;
 }
 
 void Player::init() {
@@ -24,4 +29,22 @@ void Player::render() {
 
 void Player::destroy() {
   std::cout << "destroy..." << std::endl;
+}
+
+bool Player::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+  switch (componentType) {
+    case Enums::ComponentTypes::Render:
+      ptr = this->renderComponent;
+      break;
+
+    case Enums::ComponentTypes::Input:
+      ptr = this->inputComponent;
+      break;
+
+    default:
+      std::cout << "Not a valid ComponentType: " << componentType << std::endl;
+      return false;
+  }
+
+  return true;
 }
