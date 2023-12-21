@@ -54,6 +54,6 @@ Tile** Board::getTiles() {
   return tiles;
 }
 
-bool Board::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+bool Board::getComponent(Enums::ComponentTypes componentType, void*& ptr) {
   return true;
 }

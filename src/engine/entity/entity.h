@@ -12,5 +12,5 @@ class Entity {
     virtual void render() = 0;
     virtual void destroy() = 0;
 
-    virtual bool getComponent(Enums::ComponentTypes, void*) = 0;
+    virtual bool getComponent(Enums::ComponentTypes, void*&) = 0;
 };

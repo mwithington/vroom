@@ -55,11 +55,11 @@ void EntityManager::render() {
   std::vector<Entity*> sortedEntityList = std::vector<Entity*>();
   // std::sort();
 
+  void* ptr = nullptr;
   for (size_t i = 0; i < entityList.size(); i++) {
     Entity* tmpEntity = entityList[i];
-    RenderComponent* ptr = nullptr;
     tmpEntity->getComponent(Enums::ComponentTypes::Render, ptr);
-    ptr->render(*tmpEntity);
+    ((RenderComponent*)ptr)->render(*tmpEntity);
   }
   // Highest render prio list
   // Loop through and render

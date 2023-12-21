@@ -31,7 +31,7 @@ void Player::destroy() {
   std::cout << "destroy..." << std::endl;
 }
 
-bool Player::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+bool Player::getComponent(Enums::ComponentTypes componentType, void*& ptr) {
   switch (componentType) {
     case Enums::ComponentTypes::Render:
       ptr = this->renderComponent;

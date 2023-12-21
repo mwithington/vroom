@@ -39,5 +39,5 @@ class Player: public Entity, public Eventful {
     void render() override;
     void destroy() override;
 
-    bool getComponent(Enums::ComponentTypes, void*) override;
+    bool getComponent(Enums::ComponentTypes, void*&) override;
 };

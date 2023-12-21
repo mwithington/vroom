@@ -17,7 +17,7 @@ class Tile: public Entity {
     void update(double) override;
     void render() override;
     void destroy() override;
-    bool getComponent(Enums::ComponentTypes componentType, void* ptr) override;
+    bool getComponent(Enums::ComponentTypes componentType, void*& ptr) override;
 
     Vec2 getPos();
     void setType(int type);

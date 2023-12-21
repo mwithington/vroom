@@ -200,7 +200,6 @@ int main()
     currentTime = (float)glfwGetTime() * 1000;
     gameTimeElapsed = (currentTime - lastTime);
 
-    // std::cout << "itz tiiiime: " << currTimeMsEpoch << std::endl;
     handleInput();
 
     update(entityList, gameTimeElapsed);

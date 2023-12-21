@@ -39,6 +39,6 @@ void Tile::setType(int type) {
   this->type = type;
 }
 
-bool Tile::getComponent(Enums::ComponentTypes componentType, void * ptr) {
+bool Tile::getComponent(Enums::ComponentTypes componentType, void*& ptr) {
   return true;
 }
