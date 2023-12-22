@@ -4,7 +4,8 @@
 
 PlayerRenderComponent::PlayerRenderComponent() {}
 PlayerRenderComponent::PlayerRenderComponent(int meshId, unsigned int shaderprogram) {
-  RenderComponent(meshId, shaderprogram);
+  std::cout << "setting shaderprogram: " << shaderprogram << std::endl;
+  this->shaderprogram = shaderprogram;
   MeshService::getInstance()->loadMesh("test");
   std::cout << "loaded player mesh" << std::endl;
   this->mesh = MeshService::getInstance()->getMesh(meshId);
