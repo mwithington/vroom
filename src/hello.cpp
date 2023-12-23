@@ -1,5 +1,6 @@
 #include "engine/entity/EntityManager.h"
 #include "engine/graphics/MeshService.h"
+#include "game/components/RenderComponent.h"
 #include <cstdint>
 #include <iostream>
 #include <ostream>
@@ -190,9 +191,16 @@ int main()
   std::cout << "Player: " << "x: " << p.pos.x << ", y: " << p.pos.y << std::endl;
 
   EntityManager* entityManager = EntityManager::getInstance();
-  entityManager->addEntity(&p);
   auto entityList = std::vector<Entity*>();
   entityList.push_back(&p);
+
+  Tile scrapTile = Tile(Vec2(50, 50), 0);
+  scrapTile.setRenderComponent(new RenderComponent(1, "./src/tile.mesh", shaderProgram));
+
+  entityManager->addEntity(&p);
+  entityManager->addEntity(&scrapTile);
+
+  std::cout << "Done creating entities: " << entityManager->getEntityList().size() << std::endl;
 
   while (!glfwWindowShouldClose(window))
   {

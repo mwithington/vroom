@@ -20,6 +20,6 @@ class RenderComponent {
 
   public:
     RenderComponent();
-    RenderComponent(int meshId, unsigned int shaderprogram);
+    RenderComponent(int meshId, std::string meshFile, unsigned int shaderprogram);
     void render(Entity& entity);
 };

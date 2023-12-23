@@ -3,8 +3,8 @@
 #include <ostream>
 
 RenderComponent::RenderComponent() {}
-RenderComponent::RenderComponent(int meshId, unsigned int shaderprogram) {
-  MeshService::getInstance()->loadMesh("test");
+RenderComponent::RenderComponent(int meshId, std::string meshFile, unsigned int shaderprogram) {
+  MeshService::getInstance()->loadMesh(meshFile);
   std::cout << "loaded entity mesh" << std::endl;
   this->mesh = MeshService::getInstance()->getMesh(meshId);
   std::cout << "made mesh & loaded" << std::endl;
@@ -17,40 +17,25 @@ RenderComponent::RenderComponent(int meshId, unsigned int shaderprogram) {
 };
 
 void RenderComponent::render(Entity& entity){
+  std::cout << "Rendering mesh...clearing" << std::endl;
   this->vertices.clear();
+  std::cout << "Rendering mesh...calcs" << std::endl;
   const int WIDTH = 900, HEIGHT = 600;
   const int gridWidth = (WIDTH / 2.0), gridHeight = (HEIGHT / 2.0);
   const double scaledEntityX = (entity.pos.x - gridWidth) / gridWidth;
   const double scaledEntityY = (entity.pos.y - gridHeight) / gridHeight;
 
-  const double x1 = scaledEntityX + (mesh->verts[0]/WIDTH);
-  const double y1 = scaledEntityY + (mesh->verts[1]/HEIGHT);
-  const double x2 = scaledEntityX + (mesh->verts[3]/WIDTH);
-  const double y2 = scaledEntityY + (mesh->verts[4]/HEIGHT);
-  const double x3 = scaledEntityX + (mesh->verts[6]/WIDTH);
-  const double y3 = scaledEntityY + (mesh->verts[7]/HEIGHT);
-  const double x4 = scaledEntityX + (mesh->verts[9]/WIDTH);
-  const double y4 = scaledEntityY + (mesh->verts[10]/HEIGHT);
-
-  this->vertices.push_back(x1);
-  this->vertices.push_back(y1);
-  this->vertices.push_back(0.0f);
-
-  this->vertices.push_back(x2);
-  this->vertices.push_back(y2);
-  this->vertices.push_back(0.0f);
-
-  this->vertices.push_back(x3);
-  this->vertices.push_back(y3);
-  this->vertices.push_back(0.0f);
-
-  this->vertices.push_back(x4);
-  this->vertices.push_back(y4);
-  this->vertices.push_back(0.0f);
-
-  std::cout << "scaled: " << x1 << ", " << y1 << std::endl;
+  // std::cout << "mesh verts: " << mesh->verts.size() << std::endl;
+  std::cout << "Rendering mesh...verts" << std::endl;
+  for (int i = 0; i < mesh->verts.size(); i += 3) {
+    std::cout << "building scaled verts: " << i << " of " << mesh->verts.size() << std::endl;
+    this->vertices.push_back(scaledEntityX + (mesh->verts[i]/WIDTH));
+    this->vertices.push_back(scaledEntityY + (mesh->verts[i + 1]/HEIGHT));
+    this->vertices.push_back(0.0f);
+  }
 
   // Call glUseProgram() with a shader program maybe
+  std::cout << "Rendering mesh..." << std::endl;
   RenderService::getInstance()->renderMesh(vertices, mesh->faces, this->shaderprogram);
 
   /*

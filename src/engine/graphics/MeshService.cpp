@@ -5,7 +5,7 @@
 MeshService* MeshService::instance = nullptr;
 
 MeshService::MeshService() {
-  this->meshes = std::vector<Mesh>();
+  this->meshes = std::vector<Mesh*>();
 }
 
 MeshService* MeshService::getInstance() {
@@ -17,24 +17,25 @@ MeshService* MeshService::getInstance() {
 }
 
 Mesh* MeshService::getMesh(int id) {
-  std::cout << "size: " << meshes.size() << std::endl;
-  return &meshes.at(id);
+  std::cout << "meshes size: " << meshes.size() << std::endl;
+  return meshes[id];
 }
 
-void MeshService::addMesh(Mesh mesh){
+void MeshService::addMesh(Mesh* mesh){
   meshes.push_back(mesh);
 }
 
-void MeshService::addMeshs(std::vector<Mesh> additionalMeshes) {
+void MeshService::addMeshs(std::vector<Mesh*> additionalMeshes) {
   for (int i = 0; i < additionalMeshes.size(); i++) {
-    Mesh mesh = meshes.at(i);
+    Mesh* mesh = meshes.at(i);
     this->meshes.push_back(mesh);
   }
 }
 
 void MeshService::loadMesh(std::string file) {
-  std::cout << "loading meshfile" << std::endl;
-  std::ifstream meshFile("./src/player.mesh");
+  std::cout << "loading meshfile: " << file << std::endl;
+  // std::ifstream meshFile("./src/tile.mesh");
+  std::ifstream meshFile(file);
   std::string line;
   std::vector<float> verts;
   std::vector<int> faces;
@@ -69,8 +70,9 @@ void MeshService::loadMesh(std::string file) {
   for (size_t i = 0; i < faces.size(); i++) {
     std::cout << "faces: " << faces[i] << std::endl;
   }
+
   meshFile.close();
-  this->addMesh(Mesh(verts, faces));
+  this->addMesh(new Mesh(verts, faces));
 }
 
 void MeshService::loadMeshes(std::string file) {}

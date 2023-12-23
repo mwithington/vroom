@@ -11,7 +11,7 @@
 class MeshService {
   private:
     // Variables
-    std::vector<Mesh> meshes;
+    std::vector<Mesh*> meshes;
     static MeshService* instance;
 
     // Ctors
@@ -22,8 +22,8 @@ class MeshService {
     static MeshService* getInstance();
     Mesh* getMesh(int id);
 
-    void addMesh(Mesh mesh);
-    void addMeshs(std::vector<Mesh>);
+    void addMesh(Mesh* mesh);
+    void addMeshs(std::vector<Mesh*>);
 
     void loadMeshes(std::string file);
     void loadMesh(std::string file);

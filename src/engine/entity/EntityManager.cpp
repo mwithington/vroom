@@ -30,6 +30,8 @@ void EntityManager::markForRemoval(Entity* e) {
 }
 
 void EntityManager::update(double timeElapsed) {
+  std::cout << "Entity Manager Update..." << std::endl;
+
   // update
   for (int i = 0; i < entityList.size(); i++) {
     entityList.at(i)->update(timeElapsed);
@@ -52,14 +54,17 @@ void EntityManager::update(double timeElapsed) {
 
 void EntityManager::render() {
   // Sort entityList in tempvar to be in DESC order
-  std::vector<Entity*> sortedEntityList = std::vector<Entity*>();
+  // std::vector<Entity*> sortedEntityList = std::vector<Entity*>();
   // std::sort();
 
-  void* ptr = nullptr;
   for (size_t i = 0; i < entityList.size(); i++) {
+    void* ptr = nullptr;
     Entity* tmpEntity = entityList[i];
-    tmpEntity->getComponent(Enums::ComponentTypes::Render, ptr);
-    ((RenderComponent*)ptr)->render(*tmpEntity);
+    if(tmpEntity->getComponent(Enums::ComponentTypes::Render, ptr)) {
+      std::cout << "rendering entity: " << i << std::endl;
+      std::cout << "calling render cpt" << std::endl;
+      ((RenderComponent*)ptr)->render(*tmpEntity);
+    }
   }
   // Highest render prio list
   // Loop through and render

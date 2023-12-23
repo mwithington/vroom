@@ -35,10 +35,18 @@ bool Player::getComponent(Enums::ComponentTypes componentType, void*& ptr) {
   switch (componentType) {
     case Enums::ComponentTypes::Render:
       ptr = this->renderComponent;
+      if (ptr == nullptr) {
+        std::cout << "no render cpt?" << std::endl;
+        return false;
+      }
       break;
 
     case Enums::ComponentTypes::Input:
       ptr = this->inputComponent;
+      if (ptr == nullptr) {
+        std::cout << "no input cpt?" << std::endl;
+        return false;
+      }
       break;
 
     default:
