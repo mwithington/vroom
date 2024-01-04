@@ -48,7 +48,9 @@ bool Tile::getComponent(Enums::ComponentTypes componentType, void*& ptr) {
     case Enums::ComponentTypes::Render:
       ptr = this->renderComponent;
 
-      if (ptr == nullptr) {
+      std::cout << "ptr..." << ptr << std::endl;
+
+      if (this->renderComponent == nullptr) {
         std::cout << "no render cpt?" << std::endl;
         return false;
       }

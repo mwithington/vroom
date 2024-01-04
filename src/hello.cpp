@@ -128,7 +128,7 @@ int main()
 
   // Generate a board with preset tiles
   // We should do this in a conf file just so we dont need to change often: Mike
-  b.getTiles()[3][3].setType(5);
+  // b.getTiles()[3][3].setType(5);
 
   std::cout << "Tile: " << "x: " << t.pos.x << ", y: " << t.pos.y << std::endl;
   b.render();
@@ -209,6 +209,34 @@ int main()
   entityManager->addEntity(&p);
   entityManager->addEntity(&h);
   entityManager->addEntity(&scrapTile);
+  // Get all Tiles
+  Tile** tiles = b.getTiles();
+  int currentTileOffset = 0;
+  int tileSize = sizeof(void*);
+
+  std::cout << "Tile[0][0]" << &tiles[0][0] << std::endl;
+  std::cout << "Tile[0][1]" << &tiles[0][1] << std::endl;
+
+  std::cout << "Tile[0][0]" << *tiles << std::endl;
+  std::cout << "Tile[0][1]" << (*tiles) + tileSize << std::endl;
+
+  // Loop over tiles ** array and do pointer math
+  for (int y = 0; y < 10; y++) {
+    for(int x =0; x < 12;  x++) {
+      tiles[y][x].setRenderComponent(new RenderComponent(((13*y)+x+3), "./src/meshes/tile.mesh", shaderProgram));
+      entityManager->addEntity(&(tiles[y][x]));
+    }
+    // std::cout << "rendering in loop" << std::endl;
+    // Tile* tempTile = (*tiles) + currentTileOffset;
+    // std::cout << "Tile (x): " << tempTile->pos.x << std::endl;
+
+    // tempTile->setRenderComponent(new RenderComponent(i+3, "./src/meshes/tile.mesh", shaderProgram));
+    // entityManager->addEntity(tempTile);
+    // currentTileOffset += tileSize;
+  }
+
+
+
 
   std::cout << "Done creating entities: " << entityManager->getEntityList().size() << std::endl;
 

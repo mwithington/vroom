@@ -21,4 +21,6 @@ class Board: Entity {
     void destroy() override;
     bool getComponent(Enums::ComponentTypes componentType, void*& ptr) override;
     Tile** getTiles();
+
+    int getArea();
 };
